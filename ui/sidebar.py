@@ -156,6 +156,11 @@ def render_sidebar(df: pd.DataFrame, article_count: int = 0, last_refreshed: str
             key="sel_interval",
         )
 
+        content_type = st.radio(
+            "Content type", options=["All", "blog", "releases"],
+            horizontal=True, key="filter_type",
+        )
+
         st.divider()
 
         all_categories = sorted(df["category"].dropna().unique().tolist()) if not df.empty else []
@@ -166,27 +171,22 @@ def render_sidebar(df: pd.DataFrame, article_count: int = 0, last_refreshed: str
         # on every rerun, creating an apparent re-running loop.
         if "filter_categories" not in st.session_state:
             st.session_state["filter_categories"] = all_categories
-        if "filter_platforms" not in st.session_state:
-            st.session_state["filter_platforms"] = all_platforms
+        if "filter_platform" not in st.session_state:
+            st.session_state["filter_platform"] = "All"
 
         # Drop any stored values that no longer exist in options (e.g. feed removed)
         st.session_state["filter_categories"] = [
             c for c in st.session_state["filter_categories"] if c in all_categories
         ]
-        st.session_state["filter_platforms"] = [
-            p for p in st.session_state["filter_platforms"] if p in all_platforms
-        ]
+        if st.session_state["filter_platform"] not in ["All"] + all_platforms:
+            st.session_state["filter_platform"] = "All"
 
         categories = st.multiselect("Category", options=all_categories, key="filter_categories")
-        platforms = st.multiselect("Platform", options=all_platforms, key="filter_platforms")
-        content_type = st.radio(
-            "Content type", options=["All", "blog", "releases"],
-            horizontal=True, key="filter_type",
-        )
+        platform = st.selectbox("Platform", options=["All"] + all_platforms, key="filter_platform")
 
     return {
         "categories": categories,
-        "platforms": platforms,
+        "platforms": [platform] if platform != "All" else all_platforms,
         "type": content_type,
         "keyword": "",
         "refresh_ms": REFRESH_OPTIONS[interval_label],
