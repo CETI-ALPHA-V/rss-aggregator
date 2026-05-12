@@ -122,13 +122,14 @@ _CARD_CSS = """
 }
 
 [data-testid="stMarkdownContainer"] a {
-    color: var(--text-hi) !important;
+    color: var(--teal-lt) !important;
     text-decoration: none !important;
     font-weight: 500 !important;
     font-size: 0.9rem !important;
 }
 [data-testid="stMarkdownContainer"] a:hover {
     color: var(--teal-hi) !important;
+    text-decoration: underline !important;
 }
 
 [data-testid="stMarkdownContainer"] strong {
