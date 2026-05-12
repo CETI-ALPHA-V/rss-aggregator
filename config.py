@@ -275,6 +275,94 @@ FEEDS = [
         "platform": "LlamaIndex",
         "type": "releases",
     },
+    # Streamlit
+    {
+        "id": "streamlit_releases",
+        "name": "Streamlit Releases",
+        "url": "https://github.com/streamlit/streamlit/releases.atom",
+        "category": "Data Tools",
+        "platform": "Streamlit",
+        "type": "releases",
+    },
+    {
+        "id": "streamlit_blog",
+        "name": "Streamlit Blog",
+        "url": "https://blog.streamlit.io/feed/",
+        "category": "Data Tools",
+        "platform": "Streamlit",
+        "type": "blog",
+    },
+    # Python
+    {
+        "id": "python_releases",
+        "name": "Python Releases",
+        "url": "https://github.com/python/cpython/releases.atom",
+        "category": "Data Tools",
+        "platform": "Python",
+        "type": "releases",
+    },
+    # Apache Spark
+    {
+        "id": "spark_releases",
+        "name": "Apache Spark Releases",
+        "url": "https://github.com/apache/spark/releases.atom",
+        "category": "Data Tools",
+        "platform": "Apache Spark",
+        "type": "releases",
+    },
+    # Dagster
+    {
+        "id": "dagster_releases",
+        "name": "Dagster Releases",
+        "url": "https://github.com/dagster-io/dagster/releases.atom",
+        "category": "Orchestration",
+        "platform": "Dagster",
+        "type": "releases",
+    },
+    # Azure
+    {
+        "id": "azure_updates",
+        "name": "Azure Updates",
+        "url": "https://azure.microsoft.com/en-us/updates/feed/",
+        "category": "Cloud",
+        "platform": "Azure",
+        "type": "releases",
+    },
+    # GitHub
+    {
+        "id": "github_blog",
+        "name": "GitHub Blog",
+        "url": "https://github.blog/feed/",
+        "category": "AI",
+        "platform": "GitHub",
+        "type": "blog",
+    },
+    {
+        "id": "github_changelog",
+        "name": "GitHub Changelog",
+        "url": "https://github.blog/changelog/feed/",
+        "category": "AI",
+        "platform": "GitHub",
+        "type": "releases",
+    },
+    # Mistral AI
+    {
+        "id": "mistral_releases",
+        "name": "Mistral AI Releases",
+        "url": "https://github.com/mistralai/mistral-inference/releases.atom",
+        "category": "AI",
+        "platform": "Mistral AI",
+        "type": "releases",
+    },
+    # AWS ML
+    {
+        "id": "aws_ml_blog",
+        "name": "AWS Machine Learning Blog",
+        "url": "https://aws.amazon.com/blogs/machine-learning/feed/",
+        "category": "AI",
+        "platform": "AWS",
+        "type": "blog",
+    },
     # Marketing APIs
     {
         "id": "google_ads_blog",
@@ -332,6 +420,30 @@ FEEDS = [
         "platform": "Pinterest",
         "type": "blog",
     },
+    {
+        "id": "microsoft_ads_blog",
+        "name": "Microsoft Advertising Blog",
+        "url": "https://about.ads.microsoft.com/en-us/blog/rss",
+        "category": "Marketing",
+        "platform": "Microsoft Ads",
+        "type": "blog",
+    },
+    {
+        "id": "tiktok_newsroom",
+        "name": "TikTok Newsroom",
+        "url": "https://newsroom.tiktok.com/en-us/rss.xml",
+        "category": "Marketing",
+        "platform": "TikTok",
+        "type": "blog",
+    },
+    {
+        "id": "linkedin_engineering",
+        "name": "LinkedIn Engineering Blog",
+        "url": "https://engineering.linkedin.com/blog.rss",
+        "category": "Marketing",
+        "platform": "LinkedIn",
+        "type": "blog",
+    },
 ]
 
 SCRAPERS = [
@@ -374,9 +486,23 @@ PLATFORM_COLORS = {
     # Orchestration
     "Apache Airflow":"#38bdf8",
     "Prefect":       "#e879f9",
+    # Data Tools (new)
+    "Streamlit":     "#ff4b4b",
+    "Python":        "#4b8bbe",
+    "Apache Spark":  "#e25a1c",
+    # Orchestration (new)
+    "Dagster":       "#a882dd",
+    # Cloud (new)
+    "Azure":         "#0078d4",
+    # AI (new)
+    "GitHub":        "#e8eaed",
+    "Mistral AI":    "#ff7000",
     # Marketing
     "Amazon Ads":    "#1a9ce0",
     "Google Ads":    "#fbbc04",
     "Meta":          "#74b9ff",
     "Pinterest":     "#ff9eaa",
+    "Microsoft Ads": "#00a4ef",
+    "TikTok":        "#ee1d52",
+    "LinkedIn":      "#0a66c2",
 }
