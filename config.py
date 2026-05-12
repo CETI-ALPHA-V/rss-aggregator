@@ -8,6 +8,22 @@ FEEDS = [
         "type": "releases",
     },
     {
+        "id": "dbt_blog",
+        "name": "dbt blog releases",
+        "url": "https://www.getdbt.com/blog",
+        "category": "Data Tools",
+        "platform": "dbt",
+        "type": "blog",
+    },
+    {
+        "id": "dbt_fusion",
+        "name": "dbt fusion releases",
+        "url": "https://github.com/dbt-labs/dbt-fusion/releases.atom",
+        "category": "Data Tools",
+        "platform": "dbt",
+        "type": "blog",
+    },
+    {
         "id": "snowflake_blog",
         "name": "Snowflake Blog",
         "url": "https://publish-p57963-e462109.adobeaemcloud.com/feed/?lang=en",
