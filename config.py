@@ -252,6 +252,22 @@ FEEDS = [
         "type": "blog",
     },
     {
+        "id": "huggingface_papers",
+        "name": "Hugging Face Daily Papers",
+        "url": "https://huggingface.co/papers.rss",
+        "category": "AI",
+        "platform": "Hugging Face",
+        "type": "blog",
+    },
+    {
+        "id": "huggingface_transformers",
+        "name": "Hugging Face Transformers",
+        "url": "https://github.com/huggingface/transformers/releases.atom",
+        "category": "AI",
+        "platform": "Hugging Face",
+        "type": "releases",
+    },
+    {
         "id": "ollama",
         "name": "Ollama Releases",
         "url": "https://github.com/ollama/ollama/releases.atom",

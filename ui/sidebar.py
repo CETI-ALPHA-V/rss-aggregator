@@ -9,6 +9,14 @@ REFRESH_OPTIONS = {
     "60 min": 60 * 60 * 1000,
 }
 
+DATE_RANGE_OPTIONS = {
+    "Today": 1,
+    "Last 7 days": 7,
+    "Last 30 days": 30,
+    "Last 60 days": 60,
+    "All time": None,
+}
+
 _SIDEBAR_CSS = """
 <style>
 [data-testid="stSidebar"] {
@@ -161,6 +169,13 @@ def render_sidebar(df: pd.DataFrame, article_count: int = 0, last_refreshed: str
             horizontal=True, key="filter_type",
         )
 
+        date_label = st.selectbox(
+            "Date range",
+            options=list(DATE_RANGE_OPTIONS.keys()),
+            index=2,  # default: Last 30 days
+            key="sel_date_range",
+        )
+
         st.divider()
 
         all_categories = sorted(df["category"].dropna().unique().tolist()) if not df.empty else []
@@ -190,4 +205,5 @@ def render_sidebar(df: pd.DataFrame, article_count: int = 0, last_refreshed: str
         "type": content_type,
         "keyword": "",
         "refresh_ms": REFRESH_OPTIONS[interval_label],
+        "days": DATE_RANGE_OPTIONS[date_label],
     }

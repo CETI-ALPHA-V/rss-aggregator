@@ -10,6 +10,7 @@ from feeds.fetcher import fetch_all
 from feeds.scraper import scrape_all
 from ui.sidebar import render_sidebar
 from ui.feed_view import apply_filters, render_articles, _format_date
+from ui.email_export import render_email_export
 
 _CSS = """
 <style>
@@ -74,6 +75,16 @@ _CSS = """
     letter-spacing: 0.04em;
 }
 
+.material-icons, .material-icons-outlined,
+.material-icons-sharp, .material-icons-round,
+[class*="material-icon"], [class*="MaterialIcon"],
+span[data-testid="stExpanderToggleIcon"] {
+    font-family: 'Material Icons', 'Material Icons Sharp', 'Material Icons Outlined' !important;
+    letter-spacing: normal !important;
+    font-feature-settings: 'liga' 1 !important;
+    -webkit-font-feature-settings: 'liga' 1 !important;
+}
+
 h2, h3, h4 {
     color: var(--gold) !important;
     text-transform: uppercase !important;
@@ -90,6 +101,26 @@ p, .stMarkdown, [data-testid="stMarkdownContainer"] p {
     background: linear-gradient(100deg, rgba(136,183,184,0.07) 0%, transparent 65%);
     padding: 0.9rem 1.4rem 0.8rem;
     margin-bottom: 1.4rem;
+}
+.banner-inner {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+}
+.banner-logo {
+    width: 60px;
+    height: 60px;
+    border: 2px solid var(--gold);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--gold-lt);
+    letter-spacing: 0.06em;
+    background: rgba(214,173,94,0.08);
+    box-shadow: 0 0 14px rgba(242,217,110,0.18), inset 0 0 10px rgba(214,173,94,0.06);
+    flex-shrink: 0;
 }
 .expanse-banner::before, .expanse-banner::after {
     content: "";
@@ -112,14 +143,14 @@ p, .stMarkdown, [data-testid="stMarkdownContainer"] p {
 .banner-online { color: var(--green); }
 .banner-title {
     color: var(--gold-lt);
-    font-size: 1.45rem;
+    font-size: 2.18rem;
     letter-spacing: 0.22em;
     text-transform: uppercase;
     text-shadow: 0 0 24px rgba(242,217,110,0.35);
     line-height: 1.2;
 }
 .banner-sub {
-    color: var(--text-dim);
+    color: var(--text);
     font-size: 0.67rem;
     letter-spacing: 0.14em;
     text-transform: uppercase;
@@ -228,17 +259,48 @@ hr { border-color: var(--border) !important; }
 ::-webkit-scrollbar-thumb { background: rgba(92,157,176,0.32); border-radius: 2px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--teal-lt); }
 </style>
+<script>
+(function fixMaterialIcons() {
+    const ICON_STRINGS = [
+        'keyboard_arrow_right','keyboard_arrow_down','keyboard_arrow_up',
+        'keyboard_arrow_left','expand_more','expand_less',
+        'chevron_right','chevron_left','arrow_right','arrow_drop_down',
+        'close','search','menu','more_vert','more_horiz'
+    ];
+    function fix() {
+        const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+        let node;
+        while ((node = walker.nextNode())) {
+            if (ICON_STRINGS.includes(node.textContent.trim())) {
+                const el = node.parentElement;
+                el.style.setProperty('font-family', "'Material Icons', 'Material Icons Sharp'", 'important');
+                el.style.setProperty('letter-spacing', 'normal', 'important');
+                el.style.setProperty('font-feature-settings', '"liga" 1', 'important');
+            }
+        }
+    }
+    fix();
+    setTimeout(fix, 500);
+    setTimeout(fix, 1500);
+    new MutationObserver(fix).observe(document.body, { childList: true, subtree: true });
+})();
+</script>
 """
 
 _HEADER_HTML = """
 <div class="expanse-banner">
-    <div class="banner-title">NEWS PULSE</div>
-    <div class="banner-sub">FEED AGGREGATOR &nbsp;&middot;&nbsp; RSS &amp; SCRAPER</div>
+    <div class="banner-inner">
+        <div class="banner-logo">BB</div>
+        <div>
+            <div class="banner-title">BYTE BRIEF</div>
+            <div class="banner-sub">FRESH BYTES &nbsp;&middot;&nbsp; DAILY BRIEF</div>
+        </div>
+    </div>
 </div>
 """
 
 st.set_page_config(
-    page_title="News Pulse",
+    page_title="Byte Brief",
     page_icon="⚡",
     layout="wide",
 )
@@ -305,6 +367,11 @@ st.session_state["_filtered_count"] = len(filtered_df)
 
 latest = df["published"].dropna().max() if not df.empty else ""
 last_item = f" · Last item: {_format_date(latest)}" if latest else ""
-st.caption(f"{len(filtered_df)} article{'s' if len(filtered_df) != 1 else ''}{last_item}")
+
+_col_caption, _col_share = st.columns([4, 1])
+with _col_caption:
+    st.caption(f"{len(filtered_df)} article{'s' if len(filtered_df) != 1 else ''}{last_item}")
+with _col_share:
+    render_email_export(filtered_df)
 
 render_articles(filtered_df)

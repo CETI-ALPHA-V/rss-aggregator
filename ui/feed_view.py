@@ -19,10 +19,11 @@ def apply_filters(df: pd.DataFrame, filters: dict) -> pd.DataFrame:
     if df.empty:
         return df
 
-    # Drop articles older than 2 months; keep rows with no date
-    cutoff = datetime.now(timezone.utc) - timedelta(days=62)
-    parsed = df["published"].apply(_parse_dt)
-    df = df[(parsed.isna()) | (parsed >= cutoff)]
+    days = filters.get("days")
+    if days is not None:
+        cutoff = datetime.now(timezone.utc) - timedelta(days=days)
+        parsed = df["published"].apply(_parse_dt)
+        df = df[(parsed.isna()) | (parsed >= cutoff)]
 
     if filters["categories"]:
         df = df[df["category"].isin(filters["categories"])]
@@ -180,23 +181,45 @@ def render_articles(df: pd.DataFrame) -> None:
         platform = row.get("platform") or ""
         content_type = row.get("type") or ""
         date_str = _format_date(row.get("published") or "")
+        color = PLATFORM_COLORS.get(platform, "#71717a")
+        initial = platform[0].upper() if platform else "?"
+        type_symbol = "↑" if content_type == "releases" else "✦"
+
+        title_html = (
+            f'<a href="{link}" style="color:var(--teal-lt);text-decoration:none;'
+            f'font-weight:600;font-size:0.9rem;">{title}</a>'
+            if link else
+            f'<span style="color:var(--text-hi);font-weight:600;font-size:0.9rem;">{title}</span>'
+        )
+        summary_html = (
+            f'<div style="color:var(--text);font-size:0.82rem;line-height:1.55;margin-top:4px;">'
+            f'{summary[:600]}{"…" if len(summary) > 600 else ""}</div>'
+            if summary else ""
+        )
+
+        card_html = f"""
+<div style="display:flex;align-items:flex-start;gap:12px;">
+  <div style="flex-shrink:0;text-align:center;">
+    <div style="width:42px;height:42px;background:{color};
+      display:flex;align-items:center;justify-content:center;">
+      <span style="color:#ffffff;font-size:17px;font-weight:700;
+        font-family:'Share Tech Mono',monospace;">{initial}</span>
+    </div>
+    <div style="color:{color};font-size:11px;margin-top:3px;line-height:1;">{type_symbol}</div>
+  </div>
+  <div style="flex:1;min-width:0;">
+    <div style="margin-bottom:5px;">
+      {_badge(platform, link)}&nbsp;&nbsp;{_type_pill(content_type)}
+      <span style="float:right;color:var(--text-dim);font-size:0.72rem;
+        letter-spacing:0.1em;font-family:'Share Tech Mono',monospace;">{date_str}</span>
+    </div>
+    <div style="margin-bottom:2px;">{title_html}</div>
+    {summary_html}
+  </div>
+</div>"""
 
         with st.container(border=True):
-            header_html = (
-                f'{_badge(platform, link)}&nbsp;&nbsp;{_type_pill(content_type)}'
-                f'<span style="float:right;color:var(--text-dim);font-size:0.72rem;'
-                f'letter-spacing:0.1em;font-family:\'Share Tech Mono\',monospace;">{date_str}</span>'
-            )
-            st.markdown(header_html, unsafe_allow_html=True)
-
-            if link:
-                st.markdown(f"**[{title}]({link})**")
-            else:
-                st.markdown(f"**{title}**")
-
-            if summary:
-                display = summary[:600] + ("…" if len(summary) > 600 else "")
-                st.caption(display)
+            st.markdown(card_html, unsafe_allow_html=True)
 
     remaining = len(df) - show_n
     if remaining > 0:
