@@ -4,13 +4,14 @@ import pandas as pd
 import streamlit as st
 from streamlit_autorefresh import st_autorefresh
 
-from config import FEEDS, SCRAPERS, DB_PATH, CACHE_TTL_SECONDS
-from feeds.cache import init_db, is_feed_stale, get_all_cached, last_fetch_time
+from config import FEEDS, SCRAPERS, DB_PATH, CACHE_TTL_SECONDS, LLM_INVENTORY
+from feeds.cache import init_db, is_feed_stale, get_all_cached, last_fetch_time, sync_feed_metadata
 from feeds.fetcher import fetch_all
 from feeds.scraper import scrape_all
 from ui.sidebar import render_sidebar
 from ui.feed_view import apply_filters, render_articles, _format_date
 from ui.email_export import render_email_export
+from ui.model_table import render_llm_inventory, render_model_table
 
 _CSS = """
 <style>
@@ -290,17 +291,17 @@ hr { border-color: var(--border) !important; }
 _HEADER_HTML = """
 <div class="expanse-banner">
     <div class="banner-inner">
-        <div class="banner-logo">BB</div>
+        <div class="banner-logo">AI</div>
         <div>
-            <div class="banner-title">BYTE BRIEF</div>
-            <div class="banner-sub">FRESH BYTES &nbsp;&middot;&nbsp; DAILY BRIEF</div>
+            <div class="banner-title" style="text-transform:none;">m[AI]ntain</div>
+            <div class="banner-sub">AI &nbsp;&middot;&nbsp; DATA &nbsp;&middot;&nbsp; CLOUD &nbsp;&middot;&nbsp; MARKETING</div>
         </div>
     </div>
 </div>
 """
 
 st.set_page_config(
-    page_title="Byte Brief",
+    page_title="m[AI]ntain",
     page_icon="⚡",
     layout="wide",
 )
@@ -311,6 +312,7 @@ os.makedirs("data", exist_ok=True)
 
 if "db_conn" not in st.session_state:
     st.session_state["db_conn"] = init_db(DB_PATH)
+    sync_feed_metadata(st.session_state["db_conn"], FEEDS + SCRAPERS)
 
 conn = st.session_state["db_conn"]
 
@@ -368,10 +370,49 @@ st.session_state["_filtered_count"] = len(filtered_df)
 latest = df["published"].dropna().max() if not df.empty else ""
 last_item = f" · Last item: {_format_date(latest)}" if latest else ""
 
-_col_caption, _col_share = st.columns([4, 1])
-with _col_caption:
-    st.caption(f"{len(filtered_df)} article{'s' if len(filtered_df) != 1 else ''}{last_item}")
-with _col_share:
-    render_email_export(filtered_df)
+tab_feed, tab_models = st.tabs(["Feed", "Model Updates"])
 
-render_articles(filtered_df)
+with tab_feed:
+    _col_caption, _col_share = st.columns([4, 1])
+    with _col_caption:
+        st.caption(f"{len(filtered_df)} article{'s' if len(filtered_df) != 1 else ''}{last_item}")
+    with _col_share:
+        render_email_export(filtered_df)
+
+    render_articles(filtered_df, key_prefix="feed")
+
+with tab_models:
+    # AI-platform release notes only, independent of the Category/Platform/Content
+    # type filters in the sidebar — this tab is always "what's new across AI models".
+    # Still respects the sidebar's date range so it stays consistent with the main feed.
+    model_filters = {
+        "categories": ["AI"],
+        "platforms": [],
+        "type": "releases",
+        "keyword": "",
+        "days": filters["days"],
+    }
+    model_df = apply_filters(df, model_filters)
+
+    st.subheader("LLM Inventory")
+    inv_col1, inv_col2 = st.columns([1, 1])
+    with inv_col1:
+        inv_providers = st.multiselect(
+            "Company",
+            options=sorted({m["provider"] for m in LLM_INVENTORY}),
+            key="llm_inv_provider",
+        )
+    with inv_col2:
+        inv_search = st.text_input(
+            "Model name",
+            key="llm_inv_search",
+            placeholder="e.g. Claude, GPT, Gemini…",
+        )
+    render_llm_inventory(providers=inv_providers, search=inv_search)
+
+    st.subheader("Tool / SDK Releases")
+    st.caption("Live from cached feeds — CLI/SDK/library version numbers, not model versions.")
+    render_model_table(df)
+
+    st.caption(f"{len(model_df)} model update{'s' if len(model_df) != 1 else ''} across AI platforms")
+    render_articles(model_df, key_prefix="models")

@@ -7,3 +7,7 @@ data/
 *.db
 .env
 .env.*
+.DS_Store
+.playwright-mcp/
+web/node_modules/
+web/dist/

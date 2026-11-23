@@ -49,8 +49,8 @@ def _source_domain(url: str) -> str:
     if not url:
         return ""
     try:
-        host = urlparse(url).netloc.lstrip("www.")
-        return host
+        host = urlparse(url).netloc
+        return host[4:] if host.startswith("www.") else host
     except Exception:
         return ""
 
@@ -155,7 +155,7 @@ _CARD_CSS = """
 _PAGE_SIZE = 50
 
 
-def render_articles(df: pd.DataFrame) -> None:
+def render_articles(df: pd.DataFrame, key_prefix: str = "feed") -> None:
     st.markdown(_CARD_CSS, unsafe_allow_html=True)
 
     if df.empty:
@@ -164,13 +164,16 @@ def render_articles(df: pd.DataFrame) -> None:
 
     df = df.sort_values("published", ascending=False, na_position="last").reset_index(drop=True)
 
+    key_articles_key = f"_articles_key_{key_prefix}"
+    key_articles_page = f"_articles_page_{key_prefix}"
+
     # Reset page when the filtered result set changes
     result_key = f"{len(df)}_{df['link'].iloc[0] if len(df) else ''}"
-    if st.session_state.get("_articles_key") != result_key:
-        st.session_state["_articles_key"] = result_key
-        st.session_state["_articles_page"] = 1
+    if st.session_state.get(key_articles_key) != result_key:
+        st.session_state[key_articles_key] = result_key
+        st.session_state[key_articles_page] = 1
 
-    page = st.session_state.get("_articles_page", 1)
+    page = st.session_state.get(key_articles_page, 1)
     show_n = page * _PAGE_SIZE
     display_df = df.iloc[:show_n]
 
@@ -223,8 +226,11 @@ def render_articles(df: pd.DataFrame) -> None:
 
     remaining = len(df) - show_n
     if remaining > 0:
-        if st.button(f"Load {min(_PAGE_SIZE, remaining)} more  ({remaining} remaining)", key="load_more_btn"):
-            st.session_state["_articles_page"] = page + 1
+        if st.button(
+            f"Load {min(_PAGE_SIZE, remaining)} more  ({remaining} remaining)",
+            key=f"load_more_btn_{key_prefix}",
+        ):
+            st.session_state[key_articles_page] = page + 1
             st.rerun()
 
 

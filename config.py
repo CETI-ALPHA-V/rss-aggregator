@@ -9,8 +9,8 @@ FEEDS = [
     },
     {
         "id": "dbt_blog",
-        "name": "dbt blog releases",
-        "url": "https://www.getdbt.com/blog",
+        "name": "dbt Blog",
+        "url": "https://www.getdbt.com/blog/rss.xml",
         "category": "Data Tools",
         "platform": "dbt",
         "type": "blog",
@@ -21,7 +21,7 @@ FEEDS = [
         "url": "https://github.com/dbt-labs/dbt-fusion/releases.atom",
         "category": "Data Tools",
         "platform": "dbt",
-        "type": "blog",
+        "type": "releases",
     },
     {
         "id": "snowflake_blog",
@@ -252,14 +252,6 @@ FEEDS = [
         "type": "blog",
     },
     {
-        "id": "huggingface_papers",
-        "name": "Hugging Face Daily Papers",
-        "url": "https://huggingface.co/papers.rss",
-        "category": "AI",
-        "platform": "Hugging Face",
-        "type": "blog",
-    },
-    {
         "id": "huggingface_transformers",
         "name": "Hugging Face Transformers",
         "url": "https://github.com/huggingface/transformers/releases.atom",
@@ -349,7 +341,7 @@ FEEDS = [
         "id": "github_blog",
         "name": "GitHub Blog",
         "url": "https://github.blog/feed/",
-        "category": "AI",
+        "category": "Orchestration",
         "platform": "GitHub",
         "type": "blog",
     },
@@ -357,15 +349,15 @@ FEEDS = [
         "id": "github_changelog",
         "name": "GitHub Changelog",
         "url": "https://github.blog/changelog/feed/",
-        "category": "AI",
+        "category": "Orchestration",
         "platform": "GitHub",
         "type": "releases",
     },
     # Mistral AI
     {
         "id": "mistral_releases",
-        "name": "Mistral AI Releases",
-        "url": "https://github.com/mistralai/mistral-inference/releases.atom",
+        "name": "Mistral AI Python Client Releases",
+        "url": "https://github.com/mistralai/client-python/releases.atom",
         "category": "AI",
         "platform": "Mistral AI",
         "type": "releases",
@@ -452,14 +444,80 @@ FEEDS = [
         "platform": "TikTok",
         "type": "blog",
     },
-    {
-        "id": "linkedin_engineering",
-        "name": "LinkedIn Engineering Blog",
-        "url": "https://engineering.linkedin.com/blog.rss",
-        "category": "Marketing",
-        "platform": "LinkedIn",
-        "type": "blog",
-    },
+    # ── Added Nov 2026 ───────────────────────────────────────────────────────
+    # AI
+    {"id": "deepmind_blog", "name": "Google DeepMind Blog", "url": "https://deepmind.google/blog/rss.xml", "category": "AI", "platform": "Google DeepMind", "type": "blog"},
+    {"id": "nvidia_dev_blog", "name": "NVIDIA Technical Blog", "url": "https://developer.nvidia.com/blog/feed", "category": "AI", "platform": "NVIDIA", "type": "blog"},
+    {"id": "vllm_releases", "name": "vLLM Releases", "url": "https://github.com/vllm-project/vllm/releases.atom", "category": "AI", "platform": "vLLM", "type": "releases"},
+    {"id": "openai_agents_sdk", "name": "OpenAI Agents SDK Releases", "url": "https://github.com/openai/openai-agents-python/releases.atom", "category": "AI", "platform": "OpenAI", "type": "releases"},
+    {"id": "langgraph_releases", "name": "LangGraph Releases", "url": "https://github.com/langchain-ai/langgraph/releases.atom", "category": "AI", "platform": "LangChain", "type": "releases"},
+    {"id": "claude_agent_sdk", "name": "Claude Agent SDK Releases", "url": "https://github.com/anthropics/claude-agent-sdk-python/releases.atom", "category": "AI", "platform": "Anthropic", "type": "releases"},
+    {"id": "ms_foundry_blog", "name": "Microsoft Foundry Blog", "url": "https://devblogs.microsoft.com/foundry/feed/", "category": "AI", "platform": "Microsoft Foundry", "type": "blog"},
+    {"id": "simon_willison", "name": "Simon Willison's Weblog", "url": "https://simonwillison.net/atom/everything/", "category": "AI", "platform": "Simon Willison", "type": "blog"},
+    # Cloud
+    {"id": "cloudflare_blog", "name": "Cloudflare Blog", "url": "https://blog.cloudflare.com/rss/", "category": "Cloud", "platform": "Cloudflare", "type": "blog"},
+    {"id": "kubernetes_blog", "name": "Kubernetes Blog", "url": "https://kubernetes.io/feed.xml", "category": "Cloud", "platform": "Kubernetes", "type": "blog"},
+    {"id": "terraform_releases", "name": "Terraform Releases", "url": "https://github.com/hashicorp/terraform/releases.atom", "category": "Cloud", "platform": "HashiCorp", "type": "releases"},
+    {"id": "azure_blog", "name": "Azure Blog", "url": "https://azure.microsoft.com/en-us/blog/feed/", "category": "Cloud", "platform": "Azure", "type": "blog"},
+    {"id": "docker_blog", "name": "Docker Blog", "url": "https://www.docker.com/blog/feed/", "category": "Cloud", "platform": "Docker", "type": "blog"},
+    # Data Tools
+    {"id": "fabric_blog", "name": "Microsoft Fabric Blog", "url": "https://blog.fabric.microsoft.com/en-us/blog/feed/", "category": "Data Tools", "platform": "Microsoft Fabric", "type": "blog"},
+    {"id": "powerbi_blog", "name": "Power BI Blog", "url": "https://powerbi.microsoft.com/en-us/blog/feed/", "category": "Data Tools", "platform": "Power BI", "type": "blog"},
+    {"id": "postgres_news", "name": "PostgreSQL News", "url": "https://www.postgresql.org/news.rss", "category": "Data Tools", "platform": "PostgreSQL", "type": "blog"},
+    {"id": "confluent_blog", "name": "Confluent Blog", "url": "https://www.confluent.io/rss.xml", "category": "Data Tools", "platform": "Confluent", "type": "blog"},
+    {"id": "clickhouse_blog", "name": "ClickHouse Blog", "url": "https://clickhouse.com/rss.xml", "category": "Data Tools", "platform": "ClickHouse", "type": "blog"},
+    {"id": "pandas_releases", "name": "pandas Releases", "url": "https://github.com/pandas-dev/pandas/releases.atom", "category": "Data Tools", "platform": "pandas", "type": "releases"},
+    {"id": "databricks_cli", "name": "Databricks CLI Releases", "url": "https://github.com/databricks/cli/releases.atom", "category": "Data Tools", "platform": "Databricks", "type": "releases"},
+    {"id": "unity_catalog_releases", "name": "Unity Catalog Releases", "url": "https://github.com/unitycatalog/unitycatalog/releases.atom", "category": "Data Tools", "platform": "Databricks", "type": "releases"},
+    {"id": "duckdb_blog", "name": "DuckDB Blog", "url": "https://duckdb.org/feed.xml", "category": "Data Tools", "platform": "DuckDB", "type": "blog"},
+    {"id": "motherduck_blog", "name": "MotherDuck Blog", "url": "https://motherduck.com/rss.xml", "category": "Data Tools", "platform": "MotherDuck", "type": "blog"},
+    # Orchestration
+    {"id": "temporal_releases", "name": "Temporal Releases", "url": "https://github.com/temporalio/temporal/releases.atom", "category": "Orchestration", "platform": "Temporal", "type": "releases"},
+    {"id": "kestra_releases", "name": "Kestra Releases", "url": "https://github.com/kestra-io/kestra/releases.atom", "category": "Orchestration", "platform": "Kestra", "type": "releases"},
+    {"id": "astronomer_blog", "name": "Astronomer Blog", "url": "https://www.astronomer.io/blog/rss.xml", "category": "Orchestration", "platform": "Astronomer", "type": "blog"},
+    {"id": "dagster_blog", "name": "Dagster Blog", "url": "https://dagster.io/blog/rss.xml", "category": "Orchestration", "platform": "Dagster", "type": "blog"},
+    # Marketing
+    {"id": "search_engine_journal", "name": "Search Engine Journal", "url": "https://www.searchenginejournal.com/feed/", "category": "Marketing", "platform": "Search Engine Journal", "type": "blog"},
+    {"id": "google_ads_commerce_blog", "name": "Google Ads & Commerce Blog", "url": "https://blog.google/products/ads-commerce/rss/", "category": "Marketing", "platform": "Google Ads", "type": "blog"},
+    {"id": "google_search_central", "name": "Google Search Central Blog", "url": "https://developers.google.com/search/blog/feed.xml", "category": "Marketing", "platform": "Google Search Central", "type": "blog"},
+    {"id": "google_mp_360", "name": "Google Marketing Platform Blog", "url": "https://blog.google/products/marketingplatform/360/rss/", "category": "Marketing", "platform": "Google Marketing Platform", "type": "blog"},
+    {"id": "meta_dev_blog", "name": "Meta for Developers Blog", "url": "https://developers.facebook.com/blog/feed/", "category": "Marketing", "platform": "Meta", "type": "blog"},
+]
+
+
+def _youtube(feed_id: str, name: str, channel_id: str, category: str, platform: str) -> dict:
+    return {
+        "id": feed_id,
+        "name": f"{name} on YouTube",
+        "url": f"https://www.youtube.com/feeds/videos.xml?channel_id={channel_id}",
+        "category": category,
+        "platform": platform,
+        "type": "video",
+    }
+
+
+# Official YouTube channels. Channel IDs were resolved from each channel's page
+# and the feed title checked against the organisation (Nov 2026).
+FEEDS += [
+    _youtube("yt_anthropic", "Anthropic", "UCrDwWp7EBBv4NwvScIpBDOA", "AI", "Anthropic"),
+    _youtube("yt_openai", "OpenAI", "UCXZCJLdBC09xxGZ6gcdrc6A", "AI", "OpenAI"),
+    _youtube("yt_deepmind", "Google DeepMind", "UCP7jMXSY2xbc3KCAE0MHQ-A", "AI", "Google DeepMind"),
+    _youtube("yt_google_developers", "Google for Developers", "UC_x5XG1OV2P6uZZ5FSM9Ttw", "AI", "Google"),
+    _youtube("yt_huggingface", "Hugging Face", "UCHlNU7kIZhRgSbhHvFoy72w", "AI", "Hugging Face"),
+    _youtube("yt_langchain", "LangChain", "UCC-lyoTfSrcJzA1ab3APAgw", "AI", "LangChain"),
+    _youtube("yt_nvidia_developer", "NVIDIA Developer", "UCBHcMCGaiJhv-ESTcWGJPcw", "AI", "NVIDIA"),
+    _youtube("yt_databricks", "Databricks", "UC3q8O3Bh2Le8Rj1-Q-_UUbA", "Data Tools", "Databricks"),
+    _youtube("yt_snowflake", "Snowflake", "UCs10x-muRrTQMJ4Ya-fmIlw", "Data Tools", "Snowflake"),
+    _youtube("yt_dbt", "dbt Labs", "UCVpBwKK-ecMEV75y1dYLE5w", "Data Tools", "dbt"),
+    _youtube("yt_google_cloud_tech", "Google Cloud Tech", "UCJS9pqu9BzkAMNTmzNMNhvg", "Cloud", "Google Cloud"),
+    _youtube("yt_azure", "Microsoft Azure", "UC0m-80FnNY2Qb7obvTL_2fA", "Cloud", "Azure"),
+    _youtube("yt_aws_developers", "AWS Developers", "UCT-nPlVzJI-ccQXlxjSvJmw", "Cloud", "AWS"),
+    _youtube("yt_github", "GitHub", "UC7c3Kb6jYCRj4JOHHZTxKsQ", "Orchestration", "GitHub"),
+    _youtube("yt_astronomer", "Astronomer", "UCcPZvKtWyYq6d_kCbjyTRSQ", "Orchestration", "Astronomer"),
+    _youtube("yt_google_ads", "Google Ads", "UCgl9rHdm9KojNRWs56QI_hg", "Marketing", "Google Ads"),
+    _youtube("yt_amazon_ads", "Amazon Ads", "UCGRjlfFeU-5eC-ElShfwYPw", "Marketing", "Amazon Ads"),
+    _youtube("yt_microsoft_ads", "Microsoft Advertising", "UC1nblYoCAvQldqL_3Hn8uwg", "Marketing", "Microsoft Ads"),
+    _youtube("yt_linkedin", "LinkedIn", "UCKz7zeOOpvAy5qs7sCy7QhA", "Marketing", "LinkedIn"),
 ]
 
 SCRAPERS = [
@@ -475,6 +533,125 @@ SCRAPERS = [
 
 CACHE_TTL_SECONDS = 1800  # 30 minutes
 DB_PATH = "data/feeds.duckdb"
+
+# Model-provider platforms shown in the "Model Updates" table.
+# "tier", "model", and "notes" are hand-curated — update "model" yourself
+# whenever a new flagship ships; there's no feed that reliably announces
+# model names (the release feeds below are SDK/CLI changelogs, not model
+# announcements). "Tool/SDK release" + its date are derived live from the
+# newest cached `type == "releases"` article for that platform.
+MODEL_SOURCES = [
+    {
+        "platform": "Anthropic",
+        "tier": "Frontier",
+        "model": "Claude Opus 5.5",  # current flagship per Claude 5 family — verify at anthropic.com/claude
+        "notes": "Claude family (Opus / Sonnet / Haiku)",
+    },
+    {
+        "platform": "OpenAI",
+        "tier": "Frontier",
+        "model": "GPT-6.1 Sol",  # moderate-confidence web lead (Sept 2026 DevDay) — verify at openai.com
+        "notes": "GPT family",
+    },
+    {
+        "platform": "Google",
+        "tier": "Frontier",
+        "model": "Gemini 3.5 Flash",  # moderate-confidence web lead — verify at ai.google.dev
+        "notes": "Gemini family",
+    },
+    {
+        "platform": "Mistral AI",
+        "tier": "Open Source",
+        "model": "Mistral Medium 3.5",  # moderate-confidence web lead — verify at mistral.ai/news
+        "notes": "Open-weight + commercial Mistral models",
+    },
+    {
+        "platform": "Hugging Face",
+        "tier": "Open Source",
+        "model": "",
+        "notes": "Open-weight model hub (Transformers library releases)",
+    },
+    {
+        "platform": "Ollama",
+        "tier": "Open Source",
+        "model": "",  # Ollama is a runtime, not a model family — leave blank or name a default model
+        "notes": "Local runtime for open-weight models",
+    },
+]
+
+# Offline fallback for the AI Benchmarks page. The page normally shows live
+# data fetched from LiveBench by api/benchmarks.py (cached in
+# data/livebench.json); this snapshot is only used if that has never
+# succeeded. It's the top 20 of the old LiveBench 1.x leaderboard
+# (2026-06-25), whose categories differ from LiveBench 2.0's.
+#
+# Score fields: reasoning, coding, agentic_coding, mathematics, data_analysis,
+# language, instruction_following (0-100). "cost" is cost-per-successful-task
+# in USD.
+LLM_INVENTORY_SOURCE = "LiveBench — 2026-06-25 release (saved snapshot)"
+
+LLM_INVENTORY = [
+    {"model": "Claude Fable 5.1 Max Effort", "provider": "Anthropic", "tier": "Frontier",
+     "overall": 83.4, "reasoning": 91.7, "coding": 86.4, "agentic_coding": 66.1,
+     "mathematics": 97.0, "data_analysis": 80.3, "language": 89.5, "instruction_following": 73.0, "cost": 1.212},
+    {"model": "Claude 5.5 Opus Thinking Max Effort", "provider": "Anthropic", "tier": "Frontier",
+     "overall": 83.2, "reasoning": 92.2, "coding": 89.3, "agentic_coding": 71.7,
+     "mathematics": 97.1, "data_analysis": 80.3, "language": 86.3, "instruction_following": 65.7, "cost": 0.799},
+    {"model": "Claude Fable 5 Max Effort", "provider": "Anthropic", "tier": "Frontier",
+     "overall": 83.0, "reasoning": 89.7, "coding": 86.0, "agentic_coding": 62.2,
+     "mathematics": 96.0, "data_analysis": 80.5, "language": 90.7, "instruction_following": 75.8, "cost": 1.439},
+    {"model": "GPT-6 Astra Max Effort", "provider": "OpenAI", "tier": "Frontier",
+     "overall": 82.2, "reasoning": 92.7, "coding": 80.4, "agentic_coding": 57.3,
+     "mathematics": 96.8, "data_analysis": 83.0, "language": 89.4, "instruction_following": 75.6, "cost": 0.736},
+    {"model": "GPT-6.1 Sol Max Effort", "provider": "OpenAI", "tier": "Frontier",
+     "overall": 81.6, "reasoning": 92.6, "coding": 80.4, "agentic_coding": 54.5,
+     "mathematics": 96.8, "data_analysis": 82.7, "language": 90.1, "instruction_following": 74.2, "cost": 0.142},
+    {"model": "Muse Spark 1.3 xHigh Effort", "provider": "Meta", "tier": "Frontier",
+     "overall": 81.6, "reasoning": 89.7, "coding": 81.1, "agentic_coding": 64.1,
+     "mathematics": 95.9, "data_analysis": 79.6, "language": 82.8, "instruction_following": 78.0, "cost": 0.219},
+    {"model": "Muse Wonder 1.0 Max Effort", "provider": "Meta", "tier": "Frontier",
+     "overall": 81.2, "reasoning": 90.6, "coding": 80.7, "agentic_coding": 62.7,
+     "mathematics": 96.5, "data_analysis": 81.6, "language": 82.9, "instruction_following": 73.0, "cost": 0.615},
+    {"model": "DeepSeek V4.1 Flash Max Effort", "provider": "DeepSeek", "tier": "Open Source",
+     "overall": 81.1, "reasoning": 86.7, "coding": 80.0, "agentic_coding": 77.3,
+     "mathematics": 93.3, "data_analysis": 79.3, "language": 81.2, "instruction_following": 70.0, "cost": 0.029},
+    {"model": "GPT-5.6 Sol Max Effort", "provider": "OpenAI", "tier": "Frontier",
+     "overall": 81.0, "reasoning": 91.7, "coding": 83.9, "agentic_coding": 56.2,
+     "mathematics": 96.2, "data_analysis": 79.8, "language": 87.7, "instruction_following": 71.8, "cost": 0.515},
+    {"model": "GPT-5.5 Thinking xHigh Effort", "provider": "OpenAI", "tier": "Frontier",
+     "overall": 80.2, "reasoning": 89.7, "coding": 82.1, "agentic_coding": 54.0,
+     "mathematics": 95.9, "data_analysis": 81.6, "language": 87.4, "instruction_following": 70.7, "cost": 0.435},
+    {"model": "Claude 5 Opus Thinking Max Effort", "provider": "Anthropic", "tier": "Frontier",
+     "overall": 80.1, "reasoning": 91.2, "coding": 81.4, "agentic_coding": 65.2,
+     "mathematics": 95.7, "data_analysis": 74.6, "language": 88.7, "instruction_following": 63.8, "cost": 0.699},
+    {"model": "GPT-6 Sol Max Effort", "provider": "OpenAI", "tier": "Frontier",
+     "overall": 79.3, "reasoning": 88.7, "coding": 81.8, "agentic_coding": 52.9,
+     "mathematics": 96.4, "data_analysis": 81.2, "language": 85.3, "instruction_following": 68.6, "cost": 0.268},
+    {"model": "Kimi K3", "provider": "Moonshot AI", "tier": "Open Source",
+     "overall": 79.2, "reasoning": 90.7, "coding": 81.4, "agentic_coding": 62.2,
+     "mathematics": 84.4, "data_analysis": 78.7, "language": 85.5, "instruction_following": 71.4, "cost": 0.348},
+    {"model": "Gemini 3.7 Flash High", "provider": "Google", "tier": "Frontier",
+     "overall": 78.8, "reasoning": 87.8, "coding": 78.9, "agentic_coding": 58.3,
+     "mathematics": 93.5, "data_analysis": 68.0, "language": 85.5, "instruction_following": 79.9, "cost": 0.157},
+    {"model": "Qwen 3.8 Max", "provider": "Alibaba", "tier": "Open Source",
+     "overall": 78.5, "reasoning": 88.2, "coding": 72.9, "agentic_coding": 64.6,
+     "mathematics": 91.3, "data_analysis": 78.4, "language": 79.7, "instruction_following": 74.1, "cost": 0.275},
+    {"model": "Grok 4.6 xHigh", "provider": "xAI", "tier": "Frontier",
+     "overall": 78.0, "reasoning": 90.5, "coding": 76.8, "agentic_coding": 57.0,
+     "mathematics": 92.6, "data_analysis": 73.9, "language": 83.7, "instruction_following": 71.9, "cost": 0.207},
+    {"model": "GPT-5.4 Thinking xHigh Effort", "provider": "OpenAI", "tier": "Frontier",
+     "overall": 78.0, "reasoning": 88.1, "coding": 77.5, "agentic_coding": 53.8,
+     "mathematics": 94.1, "data_analysis": 79.3, "language": 82.6, "instruction_following": 70.2, "cost": 0.387},
+    {"model": "Muse Spark 1.2 xHigh Effort", "provider": "Meta", "tier": "Frontier",
+     "overall": 78.0, "reasoning": 90.0, "coding": 77.5, "agentic_coding": 57.6,
+     "mathematics": 91.2, "data_analysis": 76.5, "language": 78.6, "instruction_following": 74.3, "cost": 0.375},
+    {"model": "GPT-5.6 Terra Max Effort", "provider": "OpenAI", "tier": "Frontier",
+     "overall": 77.9, "reasoning": 90.6, "coding": 78.2, "agentic_coding": 54.9,
+     "mathematics": 94.9, "data_analysis": 79.3, "language": 82.9, "instruction_following": 64.6, "cost": 0.352},
+    {"model": "Claude Sonnet 5.5 xHigh Effort", "provider": "Anthropic", "tier": "Frontier",
+     "overall": 77.8, "reasoning": 86.8, "coding": 88.9, "agentic_coding": 39.3,
+     "mathematics": 96.7, "data_analysis": 78.6, "language": 83.4, "instruction_following": 70.5, "cost": 0.141},
+]
 
 PLATFORM_COLORS = {
     # AI models
@@ -513,10 +690,44 @@ PLATFORM_COLORS = {
     # AI (new)
     "GitHub":        "#e8eaed",
     "Mistral AI":    "#ff7000",
+    # Added Nov 2026
+    "Google DeepMind": "#4285f4",
+    "NVIDIA":        "#76b900",
+    "vLLM":          "#fdb515",
+    "Microsoft Foundry": "#8661c5",
+    "Simon Willison": "#7c3aed",
+    "Cloudflare":    "#f38020",
+    "Kubernetes":    "#326ce5",
+    "HashiCorp":     "#7b42bc",
+    "Docker":        "#1d63ed",
+    "Microsoft Fabric": "#117865",
+    "Power BI":      "#f2c811",
+    "PostgreSQL":    "#336791",
+    "Confluent":     "#173361",
+    "ClickHouse":    "#faff69",
+    "pandas":        "#150458",
+    "MotherDuck":    "#ff9538",
+    "Temporal":      "#5b5be6",
+    "Kestra":        "#8405ff",
+    "Astronomer":    "#5a4fcf",
+    "Search Engine Journal": "#0f8b8d",
+    "Google Search Central": "#34a853",
+    "Google Marketing Platform": "#e37400",
+    # Model providers that only appear in LLM_INVENTORY
+    "xAI":           "#f97316",
+    "DeepSeek":      "#06b6d4",
+    "Moonshot AI":   "#ec4899",
+    "Alibaba":       "#ef4444",
+    "Xiaomi":        "#fb7185",
+    "MiniMax":       "#a3e635",
+    "Thinking Machines": "#e5e7eb",
+    "Z.AI":          "#818cf8",
+    "StepFun":       "#fbbf24",
+    "Abacus.AI":     "#94a3b8",
     # Marketing
     "Amazon Ads":    "#1a9ce0",
     "Google Ads":    "#fbbc04",
-    "Meta":          "#74b9ff",
+    "Meta":          "#1877f2",
     "Pinterest":     "#ff9eaa",
     "Microsoft Ads": "#00a4ef",
     "TikTok":        "#ee1d52",

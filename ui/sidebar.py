@@ -165,7 +165,7 @@ def render_sidebar(df: pd.DataFrame, article_count: int = 0, last_refreshed: str
         )
 
         content_type = st.radio(
-            "Content type", options=["All", "blog", "releases"],
+            "Content type", options=["All", "blog", "releases", "video"],
             horizontal=True, key="filter_type",
         )
 

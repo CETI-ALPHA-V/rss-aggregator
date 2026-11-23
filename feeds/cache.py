@@ -27,6 +27,21 @@ def init_db(db_path: str) -> duckdb.DuckDBPyConnection:
     return conn
 
 
+def sync_feed_metadata(conn, sources: list[dict]) -> None:
+    """Re-apply category/platform/type from config to already-cached rows.
+
+    These are stamped on each row at fetch time and the upsert doesn't touch
+    them, so without this a config change (e.g. moving a feed to another
+    category) would only affect newly fetched articles.
+    """
+    conn.executemany(
+        "UPDATE articles SET category = ?, platform = ?, type = ? "
+        "WHERE feed_id = ? AND (category <> ? OR platform <> ? OR type <> ?)",
+        [[s["category"], s["platform"], s["type"], s["id"], s["category"], s["platform"], s["type"]]
+         for s in sources],
+    )
+
+
 def is_feed_stale(conn, feed_id: str, ttl: int) -> bool:
     row = conn.execute(
         "SELECT fetched_at FROM fetch_log WHERE feed_id = ?", [feed_id]
